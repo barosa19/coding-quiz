@@ -9,8 +9,7 @@ mainEl.setAttribute("style", "text-align: center")
 h1El.setAttribute("style", "font-size: 4em")
 pEl.setAttribute("style", "font-size: 2em; margin: 5% 20%")
 startBtnEl.setAttribute("style", "font-size: 2em; background-color: green")
-
-
+/* questionBoxEl.setAttribute("style", "text-align:left;") */
 
 //testing link of questions js
 console.log(question1)
@@ -26,6 +25,7 @@ function styleQuestion(obj) {
     var questionStyle = document.createElement("h2");
     questionStyle.textContent = Object.values(obj)[0];
     questionBoxEl.appendChild(questionStyle);
+    questionStyle.setAttribute("style", "font-size: 3em; ")
 
     // Styling Options
     var optionStyleparent = document.createElement("ul")
@@ -36,6 +36,8 @@ function styleQuestion(obj) {
             var optionStyle = document.createElement("li")
             optionStyle.textContent = arr[i]
             optionStyleparent.appendChild(optionStyle)
+            //TODO: Need to make this inline
+            optionStyle.setAttribute("style", " display: inline; ; background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 2em; color: white;")
         }
     }
 
@@ -47,4 +49,4 @@ function styleQuestion(obj) {
     styleQuestion()
 
 } */
-styleQuestion(question1)
+styleQuestion(question2)
