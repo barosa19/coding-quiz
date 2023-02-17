@@ -1,15 +1,18 @@
-//
+//DOM elements
 var mainEl = document.querySelector("main")
+var headerEl = document.querySelector("header")
+var timerEl = document.querySelector(".timer-count")
 var h1El = document.querySelector("h1")
 var pEl = document.querySelector("p")
 var startBtnEl = document.querySelector(".start-btn")
 var questionBoxEl = document.querySelector(".question-box")
 
+//Styling of DOM elements
 mainEl.setAttribute("style", "text-align: center")
+headerEl.setAttribute("style", "display: flex; justify-content: space-between; padding: 1em; font-size: 1.5em;")
 h1El.setAttribute("style", "font-size: 4em")
 pEl.setAttribute("style", "font-size: 2em; margin: 5% 20%")
 startBtnEl.setAttribute("style", "font-size: 2em; background-color: green")
-/* questionBoxEl.setAttribute("style", "text-align:left;") */
 
 //testing link of questions js
 console.log(question1)
@@ -19,6 +22,21 @@ console.log(question1.options)
 console.log(question1.answers)
 console.log(question1.options[0]) //how to access array in object
 
+var secondsLeft = 75
+
+function timer(){
+    var timerInterval = setInterval(function(){
+    secondsLeft--
+    timerEl.textContent = "Time:"+ secondsLeft;
+
+    if (secondsLeft === 0){
+        //TODO: if question is wrong than we need to drop it 10 seconds and 
+        // when it hits zero I need to go to high score
+        // Need to clear interval if all questions are answered
+        clearInterval(timerInterval)
+    }
+    },750);
+}
 
 function styleQuestion(obj) {
     // Styling Question
@@ -49,4 +67,5 @@ function styleQuestion(obj) {
     styleQuestion()
 
 } */
+timer()
 styleQuestion(question2)
