@@ -14,6 +14,8 @@ h1El.setAttribute("style", "font-size: 4em")
 pEl.setAttribute("style", "font-size: 2em; margin: 5% 20%")
 startBtnEl.setAttribute("style", "font-size: 2em; background-color: green")
 
+var secondsLeft = 75
+
 //testing link of questions js
 console.log(question1)
 console.log(question1.question)
@@ -22,20 +24,23 @@ console.log(question1.options)
 console.log(question1.answers)
 console.log(question1.options[0]) //how to access array in object
 
-var secondsLeft = 75
+function timer() {
+    var timerInterval = setInterval(
+        function () {
+            secondsLeft--
+            timerEl.textContent = "Time:" + secondsLeft;
 
-function timer(){
-    var timerInterval = setInterval(function(){
-    secondsLeft--
-    timerEl.textContent = "Time:"+ secondsLeft;
+            if (secondsLeft === 0) {
+                //TODO: if question is wrong than we need to drop it 10 seconds and 
+                // when it hits zero I need to go to high score
+                // Need to clear interval if all questions are answered
+                clearInterval(timerInterval)
+            }
+        }, 1000);
+}
 
-    if (secondsLeft === 0){
-        //TODO: if question is wrong than we need to drop it 10 seconds and 
-        // when it hits zero I need to go to high score
-        // Need to clear interval if all questions are answered
-        clearInterval(timerInterval)
-    }
-    },750);
+function clearPrompt(){
+    // need to create a div to remove that entire div
 }
 
 function styleQuestion(obj) {
@@ -62,10 +67,10 @@ function styleQuestion(obj) {
     grabOptions(Object.values(obj)[1])
 }
 
+function startQuiz() {
+    clearPrompt();
+    styleQuestion(question1);
+    timer();
+}
 
-/* function startQuiz(){
-    styleQuestion()
-
-} */
-timer()
-styleQuestion(question2)
+startBtnEl.addEventListener("click", startQuiz)
