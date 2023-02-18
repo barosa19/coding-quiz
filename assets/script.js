@@ -21,13 +21,8 @@ optionsEl.setAttribute("style", "")
 var secondsLeft = 75
 var ptsScored = 0
 var Qindex = 0
-
-//testing link of questions js
-console.log(arrayOfQuestions[0])
-console.log(arrayOfQuestions[0].question)
-console.log(arrayOfQuestions[0].options)
-console.log(arrayOfQuestions[0].answers)
-
+var selectedResponse = document.createElement("p")
+    questionBoxEl.appendChild(selectedResponse)
 
 function timer() {
     var timerInterval = setInterval(
@@ -62,13 +57,18 @@ function printQuestion(obj) {
         optionStyle.classList.add("optionsTest") // ?? might not need this class
         optionStyle.setAttribute("style", " background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 1.5em; color: white;")
     }
-
 }
+
+function startQuiz() {
+    clearPrompt();
+    printQuestion(arrayOfQuestions[Qindex]);
+    timer();
+}
+
+startBtnEl.addEventListener("click", startQuiz)
+
 // Adds an event listener to each option
 optionsEl.addEventListener("click", function (event) {
-    
-    var selectedResponse = document.createElement("p")
-    questionBoxEl.appendChild(selectedResponse)
 
     if (event.target.textContent === arrayOfQuestions[Qindex].answers) {
         selectedResponse.textContent = "Right!"
@@ -79,18 +79,7 @@ optionsEl.addEventListener("click", function (event) {
         selectedResponse.textContent = "Wrong!"
         secondsLeft = secondsLeft - 10
     }
-    /* optionsEl.remove() */
+    optionsEl.textContent = ""
     Qindex++
     printQuestion(arrayOfQuestions[Qindex])
 })
-
-function startQuiz() {
-    clearPrompt();
-    printQuestion(arrayOfQuestions[Qindex]);
-    timer();
-}
-
-
-
-startBtnEl.addEventListener("click", startQuiz)
-
