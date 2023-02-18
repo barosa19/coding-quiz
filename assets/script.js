@@ -31,8 +31,7 @@ function timer() {
             secondsLeft--
             timerEl.textContent = "Time:" + secondsLeft;
 
-            if (secondsLeft === 0) {
-                //TODO: if question is wrong than we need to drop it 10 seconds and 
+            if (secondsLeft === 0) { 
                 // when it hits zero I need to go to high score
                 // Need to clear interval if all questions are answered
                 clearInterval(timerInterval)
@@ -43,7 +42,7 @@ function timer() {
 function clearPrompt() {
     IntroEl.remove()
 }
-
+// TODO: rename function
 function styleQuestion(obj) {
     // Styling Question
     var questionStyle = document.createElement("h2");
@@ -57,9 +56,9 @@ function styleQuestion(obj) {
     optionStyleparent.classList.add("ListOfOptions") // ?? might not need this class
 
     // creates and styles the list of options
-    let arrayOfOptions = Object.values(obj)[1]; // I feel like I need to be more specific
-    let answer = Object.values(obj)[2]
-    let selectedResponse = document.createElement("p")
+    var arrayOfOptions = Object.values(obj)[1]; // I feel like I need to be more specific
+    var answer = Object.values(obj)[2]
+    var selectedResponse = document.createElement("p")
     questionBoxEl.appendChild(selectedResponse)
 
     for (let i = 0; i < arrayOfOptions.length; i++) {
@@ -68,19 +67,22 @@ function styleQuestion(obj) {
         optionStyleparent.appendChild(optionStyle)
         optionStyle.classList.add("options") // ?? might not need this class
         optionStyle.setAttribute("style", " display: inline; ; background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 2em; color: white;")
-        // Adds an event listener to each option
-        optionStyle.addEventListener("click", function (event) {
-            for (let j = 0; j < arrayOfOptions.length; j++) {
-                if (event.target.textContent === answer) {
-                    selectedResponse.textContent = "Right!"
-                }
-                else {
-                    selectedResponse.textContent = "Wrong!"
-                }
-
-            }
-        })
     }
+
+    var optionsEl = document.querySelector("ul") //Don't really like! Should use .options
+    // Adds an event listener to each option
+    optionsEl.addEventListener("click", function (event) {
+        if (event.target.textContent === answer) {
+            selectedResponse.textContent = "Right!"
+            ptsScored = ptsScored + 10
+            console.log(ptsScored)
+        }
+        else {
+            selectedResponse.textContent = "Wrong!"
+            secondsLeft = secondsLeft - 10
+        }
+    })
+
 }
 
 function startQuiz() {
