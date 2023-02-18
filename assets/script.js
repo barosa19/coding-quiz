@@ -79,7 +79,7 @@ optionsEl.addEventListener("click", function (event) {
         selectedResponse.textContent = "Wrong!"
         secondsLeft = secondsLeft - 10
     }
-    optionsEl.remove()
+    /* optionsEl.remove() */
     Qindex++
     printQuestion(arrayOfQuestions[Qindex])
 })
