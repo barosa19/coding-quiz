@@ -2,6 +2,7 @@
 var mainEl = document.querySelector("main")
 var headerEl = document.querySelector("header")
 var timerEl = document.querySelector(".timer-count")
+var IntroEl = document.querySelector(".Intro-message")
 var h1El = document.querySelector("h1")
 var pEl = document.querySelector("p")
 var startBtnEl = document.querySelector(".start-btn")
@@ -15,14 +16,14 @@ pEl.setAttribute("style", "font-size: 2em; margin: 5% 20%")
 startBtnEl.setAttribute("style", "font-size: 2em; background-color: green")
 
 var secondsLeft = 75
+var ptsScored = 0
 
 //testing link of questions js
-console.log(question1)
-console.log(question1.question)
-console.log(question1["question"])
-console.log(question1.options)
-console.log(question1.answers)
-console.log(question1.options[0]) //how to access array in object
+console.log(arrayOfQuestions[0])
+console.log(arrayOfQuestions[0].question)
+console.log(arrayOfQuestions[0].options)
+console.log(arrayOfQuestions[0].answers)
+
 
 function timer() {
     var timerInterval = setInterval(
@@ -39,8 +40,8 @@ function timer() {
         }, 1000);
 }
 
-function clearPrompt(){
-    // need to create a div to remove that entire div
+function clearPrompt() {
+    IntroEl.remove()
 }
 
 function styleQuestion(obj) {
@@ -50,27 +51,45 @@ function styleQuestion(obj) {
     questionBoxEl.appendChild(questionStyle);
     questionStyle.setAttribute("style", "font-size: 3em; ")
 
-    // Styling Options
+    // creates the parent element to append the options to
     var optionStyleparent = document.createElement("ul")
     questionBoxEl.appendChild(optionStyleparent)
+    optionStyleparent.classList.add("ListOfOptions") // ?? might not need this class
 
-    function grabOptions(arr) {
-        for (let i = 0; i < arr.length; i++) {
-            var optionStyle = document.createElement("li")
-            optionStyle.textContent = arr[i]
-            optionStyleparent.appendChild(optionStyle)
-            //TODO: Need to make this inline
-            optionStyle.setAttribute("style", " display: inline; ; background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 2em; color: white;")
-        }
+    // creates and styles the list of options
+    let arrayOfOptions = Object.values(obj)[1]; // I feel like I need to be more specific
+    let answer = Object.values(obj)[2]
+    let selectedResponse = document.createElement("p")
+    questionBoxEl.appendChild(selectedResponse)
+
+    for (let i = 0; i < arrayOfOptions.length; i++) {
+        var optionStyle = document.createElement("li")
+        optionStyle.textContent = arrayOfOptions[i]
+        optionStyleparent.appendChild(optionStyle)
+        optionStyle.classList.add("options") // ?? might not need this class
+        optionStyle.setAttribute("style", " display: inline; ; background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 2em; color: white;")
+        // Adds an event listener to each option
+        optionStyle.addEventListener("click", function (event) {
+            for (let j = 0; j < arrayOfOptions.length; j++) {
+                if (event.target.textContent === answer) {
+                    selectedResponse.textContent = "Right!"
+                }
+                else {
+                    selectedResponse.textContent = "Wrong!"
+                }
+
+            }
+        })
     }
-
-    grabOptions(Object.values(obj)[1])
 }
 
 function startQuiz() {
     clearPrompt();
-    styleQuestion(question1);
+    styleQuestion(arrayOfQuestions[0]);
     timer();
 }
 
+
+
 startBtnEl.addEventListener("click", startQuiz)
+
