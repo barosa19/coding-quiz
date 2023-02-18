@@ -30,10 +30,10 @@ function timer() {
             secondsLeft--
             timerEl.textContent = "Time:" + secondsLeft;
 
-            if (secondsLeft === 0) {
-                // when it hits zero I need to go to high score
-                // Need to clear interval if all questions are answered
+            if (secondsLeft <= 0) {
                 clearInterval(timerInterval)
+                timerEl.textContent = ""
+                questionBoxEl.remove()
             }
         }, 1000);
 }
@@ -41,7 +41,7 @@ function timer() {
 function clearPrompt() {
     IntroEl.remove()
 }
-// TODO: rename function
+
 function printQuestion(obj) {
     // Styling Question
     questionPromptEl.textContent = Object.values(obj)[0];
@@ -82,4 +82,10 @@ optionsEl.addEventListener("click", function (event) {
     optionsEl.textContent = ""
     Qindex++
     printQuestion(arrayOfQuestions[Qindex])
+    
 })
+
+//TODO: Need to clear the page if all questions are done
+/* if (Qindex === arrayOfQuestions[arrayOfQuestions.length]){
+    questionBoxEl.textContent = ""
+} */
