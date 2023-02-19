@@ -44,6 +44,7 @@ function clearPrompt() {
 
 function printQuestion(obj) {
     // Styling Question
+
     questionPromptEl.textContent = Object.values(obj)[0];
     questionPromptEl.setAttribute("style", "font-size: 3em; ")
 
@@ -54,7 +55,6 @@ function printQuestion(obj) {
         var optionStyle = document.createElement("li")
         optionStyle.textContent = arrayOfOptions[i]
         optionsEl.appendChild(optionStyle)
-        optionStyle.classList.add("optionsTest") // ?? might not need this class
         optionStyle.setAttribute("style", " background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 1.5em; color: white;")
     }
 }
@@ -81,11 +81,11 @@ optionsEl.addEventListener("click", function (event) {
     }
     optionsEl.textContent = ""
     Qindex++
-    printQuestion(arrayOfQuestions[Qindex])
-    
-})
 
-//TODO: Need to clear the page if all questions are done
-/* if (Qindex === arrayOfQuestions[arrayOfQuestions.length]){
-    questionBoxEl.textContent = ""
-} */
+    if (Qindex === arrayOfQuestions.length){
+        secondsLeft = 0
+        questionBoxEl.textContent = ""}
+        else {
+            printQuestion(arrayOfQuestions[Qindex]) 
+        }
+})
