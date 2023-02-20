@@ -1,7 +1,18 @@
 h1 {
     font-size: 4em
 }
+
 p {
     font-size: 2em; 
     margin: 2% 20%
+}
+
+button {
+background-color: navy; 
+padding: .2em .6em; 
+margin: .6em; 
+border: 2px solid navy; 
+border-radius: 10px; 
+font-size: 2em; 
+color: white;
 }
