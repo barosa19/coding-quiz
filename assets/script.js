@@ -1,28 +1,34 @@
 //DOM elements
-var mainEl = document.querySelector("main")
 var headerEl = document.querySelector("header")
 var timerEl = document.querySelector(".timer-count")
+var mainEl = document.querySelector("main")
 var IntroEl = document.querySelector(".Intro-message")
-var h1El = document.querySelector("h1")
-var pEl = document.querySelector("p")
 var startBtnEl = document.querySelector(".start-btn")
 var questionBoxEl = document.querySelector(".question-box")
 var questionPromptEl = document.querySelector(".question-prompt")
 var optionsEl = document.getElementById("options")
+var responseEl = document.querySelector(".response")
+var highScoreformEl = document.querySelector(".highScoreform")
+var scoreEl = document.querySelector(".score")
+var highScoresectionEl = document.querySelector(".highScoresection")
+var highScorelistEl = document.querySelector(".highScorelist")
 
 //Styling of DOM elements
 mainEl.setAttribute("style", "text-align: center")
-headerEl.setAttribute("style", "display: flex; justify-content: space-between; padding: 1em; font-size: 1.5em;")
-h1El.setAttribute("style", "font-size: 4em")
-pEl.setAttribute("style", "font-size: 2em; margin: 5% 20%")
+headerEl.setAttribute("style", "display: flex; justify-content: space-between; padding: .5em; font-size: 1.5em;")
 startBtnEl.setAttribute("style", "font-size: 2em; background-color: green")
-optionsEl.setAttribute("style", "")
 
+// Quiz variables
 var secondsLeft = 75
 var ptsScored = 0
+var localPtsscored = localStorage.getItem(ptsScored)
 var Qindex = 0
-var selectedResponse = document.createElement("p")
-    questionBoxEl.appendChild(selectedResponse)
+
+// Initial State
+localStorage.setItem("score", 0)
+highScoreformEl.style.display = "none"
+highScoresectionEl.style.display = "none"
+
 
 function timer() {
     var timerInterval = setInterval(
@@ -32,14 +38,9 @@ function timer() {
 
             if (secondsLeft <= 0) {
                 clearInterval(timerInterval)
-                timerEl.textContent = ""
-                questionBoxEl.remove()
+                quizFinished()
             }
         }, 1000);
-}
-
-function clearPrompt() {
-    IntroEl.remove()
 }
 
 function printQuestion(obj) {
@@ -60,9 +61,21 @@ function printQuestion(obj) {
 }
 
 function startQuiz() {
-    clearPrompt();
+    IntroEl.style.display = "none"
     printQuestion(arrayOfQuestions[Qindex]);
     timer();
+}
+
+function quizFinished() {
+        secondsLeft = 0
+        questionBoxEl.textContent = ""
+        headerEl.textContent = ""
+        scoreEl.textContent = "Your final score is " + ptsScored + "."
+
+}
+
+function printForm(){
+
 }
 
 startBtnEl.addEventListener("click", startQuiz)
@@ -71,21 +84,17 @@ startBtnEl.addEventListener("click", startQuiz)
 optionsEl.addEventListener("click", function (event) {
 
     if (event.target.textContent === arrayOfQuestions[Qindex].answers) {
-        selectedResponse.textContent = "Right!"
+        responseEl.textContent = "Right!"
         ptsScored = ptsScored + 10
+        localStorage.setItem("score", ptsScored)
         console.log(ptsScored)
     }
     else {
-        selectedResponse.textContent = "Wrong!"
+        responseEl.textContent = "Wrong!"
         secondsLeft = secondsLeft - 10
     }
     optionsEl.textContent = ""
     Qindex++
-
-    if (Qindex === arrayOfQuestions.length){
-        secondsLeft = 0
-        questionBoxEl.textContent = ""}
-        else {
-            printQuestion(arrayOfQuestions[Qindex]) 
-        }
+    quizFinished()
+    printQuestion(arrayOfQuestions[Qindex])
 })
