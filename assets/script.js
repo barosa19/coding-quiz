@@ -23,7 +23,7 @@ mainEl.setAttribute("style", "text-align: center")
 headerEl.setAttribute("style", "display: flex; justify-content: space-between; padding: .8em; font-size: 1em;")
 
 // Quiz variables
-var secondsLeft = 75
+var secondsLeft = 2
 var ptsScored = 0
 var localPtsscored = localStorage.getItem(ptsScored)
 var Qindex = 0
@@ -32,6 +32,7 @@ var Qindex = 0
 localStorage.setItem("score", 0)
 highScoreformEl.style.display = "none"
 highScoresectionEl.style.display = "none"
+var arrayOfhighscores =[]
 
 function timer() {
     var timerInterval = setInterval(
@@ -78,17 +79,28 @@ function quizFinished() {
     scoreEl.textContent = "Your final score is " + ptsScored + "."
 }
 
+function storePlayer(){
+    localStorage.setItem("New highscore", JSON.stringify(arrayOfhighscores))
+}
 function submitScore(event) {
     event.preventDefault()
+    if (nameInput.value === ""){
+        return;
+    }
+
     highScoreformEl.style.display = "none"
     highScoresectionEl.style.display = "initial"
-    var nameValue = nameInput.value
-    localStorage.setItem("name", nameValue)
-    var newHigscore = document.createElement("li")
-    newHigscore.textContent = nameValue + "-" + ptsScored
-    highScorelistEl.appendChild(newHigscore)
+    var player = nameInput.value.trim() + "- " + ptsScored
+    arrayOfhighscores.push(player)
 
+    storePlayer()
+    // ? Why is it not adding to the array
+    /* var newHigscore = document.createElement("li")
+    newHigscore.textContent = nameValue + "-" + ptsScored
+    highScorelistEl.appendChild(newHigscore) */
 }
+
+console.log(arrayOfhighscores)
 
 //EVENT LISTENERS
 viewScoresEl.addEventListener("click", function () {
