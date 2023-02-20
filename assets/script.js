@@ -44,7 +44,7 @@ function renderHighscores(){
         var li = document.createElement("li")
         li.textContent = (i+1) + "." + arrayOfhighscores[i]
         highScorelistEl.appendChild(li)
-        li.setAttribute("style", " background-color: grey; padding: .2em .6em; margin: .6em; border: 2px solid grey; border-radius: 10px; font-size: 1.5em; color: black;")
+        li.setAttribute("style", " background-color: cornflowerblue; padding: .2em .6em; margin: .6em; font-size: 1.5em; color: black;")
     
 
     }
@@ -65,7 +65,7 @@ function timer() {
         function () {
             secondsLeft--
             timerEl.textContent = "Time:" + secondsLeft;
-            timerEl.setAttribute("style", "font-size: 2em; margin: auto 0; padding-right: 1em;")
+            timerEl.setAttribute("style", "justify-content: right; font-size: 2em; margin: auto 0; padding-right: 1em;")
 
             if (secondsLeft <= 0) {
                 clearInterval(timerInterval)
@@ -86,13 +86,12 @@ function printQuestion(obj) {
         var optionStyle = document.createElement("li")
         optionStyle.textContent = arrayOfOptions[i]
         optionsEl.appendChild(optionStyle)
-        optionStyle.setAttribute("style", " background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 1.5em; color: white;")
+        optionStyle.setAttribute("style", " background-color: navy; padding: .2em .6em; margin: .6em; border: 2px solid navy; border-radius: 10px; font-size: 2em; color: white;")
     }
 }
 
 function startQuiz() {
     IntroEl.style.display = "none"
-    viewScoresEl.style.display = "none"
     printQuestion(arrayOfQuestions[Qindex]);
     timer();
 }
@@ -123,8 +122,6 @@ function submitScore(event) {
     storeHighscores()
     renderHighscores()
 }
-
-console.log(arrayOfhighscores)
 
 //EVENT LISTENERS
 viewScoresEl.addEventListener("click", function () {

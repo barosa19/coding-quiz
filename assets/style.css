@@ -16,3 +16,17 @@ border-radius: 10px;
 font-size: 2em; 
 color: white;
 }
+
+label {
+    font-size: 2em;
+    margin: 0 .5em;
+}
+
+#name-input {
+    font-size: 2em;
+    padding: .3em;
+}
+
+ul {
+    list-style-type: none;
+}
