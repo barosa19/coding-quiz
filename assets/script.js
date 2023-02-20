@@ -21,18 +21,44 @@ var clearScoresEl = document.querySelector("#clearScores")
 //Styling of DOM elements
 mainEl.setAttribute("style", "text-align: center")
 headerEl.setAttribute("style", "display: flex; justify-content: space-between; padding: .8em; font-size: 1em;")
+viewScoresEl.setAttribute("style", "font-size: 1em")
 
 // Quiz variables
-var secondsLeft = 2
+var secondsLeft = 75
 var ptsScored = 0
-var localPtsscored = localStorage.getItem(ptsScored)
 var Qindex = 0
 
 // Initial State
+var localPtsscored = localStorage.getItem(ptsScored)
 localStorage.setItem("score", 0)
 highScoreformEl.style.display = "none"
 highScoresectionEl.style.display = "none"
-var arrayOfhighscores =[]
+var arrayOfhighscores = []
+
+// TODO: Need to adjust formating on buttons 
+
+function renderHighscores(){
+    highScorelistEl.textContent = ""
+
+    for (var i = 0; i < arrayOfhighscores.length; i++) {
+        var li = document.createElement("li")
+        li.textContent = (i+1) + "." + arrayOfhighscores[i]
+        highScorelistEl.appendChild(li)
+        li.setAttribute("style", " background-color: grey; padding: .2em .6em; margin: .6em; border: 2px solid grey; border-radius: 10px; font-size: 1.5em; color: black;")
+    
+
+    }
+}
+
+function init(){
+    var storedHighscores =JSON.parse(localStorage.getItem("Highscores"))
+
+    if (storedHighscores !=null) {
+        arrayOfhighscores = storedHighscores
+    }
+    Qindex = 0
+    renderHighscores()
+}
 
 function timer() {
     var timerInterval = setInterval(
@@ -50,7 +76,6 @@ function timer() {
 
 function printQuestion(obj) {
     // Styling Question
-
     questionPromptEl.textContent = Object.values(obj)[0];
     questionPromptEl.setAttribute("style", "font-size: 3em; ")
 
@@ -67,6 +92,7 @@ function printQuestion(obj) {
 
 function startQuiz() {
     IntroEl.style.display = "none"
+    viewScoresEl.style.display = "none"
     printQuestion(arrayOfQuestions[Qindex]);
     timer();
 }
@@ -79,12 +105,13 @@ function quizFinished() {
     scoreEl.textContent = "Your final score is " + ptsScored + "."
 }
 
-function storePlayer(){
-    localStorage.setItem("New highscore", JSON.stringify(arrayOfhighscores))
+function storeHighscores() {
+    localStorage.setItem("Highscores", JSON.stringify(arrayOfhighscores))
 }
+
 function submitScore(event) {
     event.preventDefault()
-    if (nameInput.value === ""){
+    if (nameInput.value === "") {
         return;
     }
 
@@ -92,12 +119,9 @@ function submitScore(event) {
     highScoresectionEl.style.display = "initial"
     var player = nameInput.value.trim() + "- " + ptsScored
     arrayOfhighscores.push(player)
-
-    storePlayer()
-    // ? Why is it not adding to the array
-    /* var newHigscore = document.createElement("li")
-    newHigscore.textContent = nameValue + "-" + ptsScored
-    highScorelistEl.appendChild(newHigscore) */
+    console.log(arrayOfhighscores)
+    storeHighscores()
+    renderHighscores()
 }
 
 console.log(arrayOfhighscores)
@@ -109,7 +133,7 @@ viewScoresEl.addEventListener("click", function () {
 })
 startBtnEl.addEventListener("click", startQuiz)
 
-// Adds an event listener to each option
+    // Adds an event listener to each option
 optionsEl.addEventListener("click", function (event) {
     if (event.target.textContent === arrayOfQuestions[Qindex].answers) {
         responseEl.textContent = "Right!"
@@ -136,3 +160,10 @@ submitEl.addEventListener("click", submitScore)
 returnToQuizEl.addEventListener("click", function () {
     location.reload()
 })
+
+clearScoresEl.addEventListener("click", function () {
+    highScorelistEl.textContent = ""
+    localStorage.setItem("Highscores", null)
+})
+
+init()
