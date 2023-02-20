@@ -12,6 +12,9 @@ No installation is required for this application. To visit the the webpage open 
 
 This webpage was designed to host a quiz for coding students. The uniquness of this application is that students may customize their quizzes with no addition functions needed. They will be able to adjust time, ptz per questions, and add questions simply by going to the questions.js file and modify the arrayOfquestions. 
 
+![quiz](https://user-images.githubusercontent.com/122834927/220203426-49199a6a-9fb2-4276-9f9b-1899f7f0010d.PNG)
+
+
 ## Credits
 N/A
 
