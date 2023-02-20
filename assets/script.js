@@ -11,6 +11,7 @@ var optionsEl = document.getElementById("options")
 var responseEl = document.querySelector(".response")
 var highScoreformEl = document.querySelector(".highScoreform")
 var scoreEl = document.querySelector(".score")
+var nameInput = document.querySelector("#name-input")
 var submitEl = document.querySelector("#submit")
 var highScoresectionEl = document.querySelector(".highScoresection")
 var highScorelistEl = document.querySelector(".highScorelist")
@@ -19,7 +20,7 @@ var clearScoresEl = document.querySelector("#clearScores")
 
 //Styling of DOM elements
 mainEl.setAttribute("style", "text-align: center")
-headerEl.setAttribute("style", "display: flex; justify-content: space-between; padding: .5em; font-size: 1.5em;")
+headerEl.setAttribute("style", "display: flex; justify-content: space-between; padding: .8em; font-size: 1em;")
 
 // Quiz variables
 var secondsLeft = 75
@@ -37,6 +38,7 @@ function timer() {
         function () {
             secondsLeft--
             timerEl.textContent = "Time:" + secondsLeft;
+            timerEl.setAttribute("style", "font-size: 2em; margin: auto 0; padding-right: 1em;")
 
             if (secondsLeft <= 0) {
                 clearInterval(timerInterval)
@@ -76,14 +78,26 @@ function quizFinished() {
     scoreEl.textContent = "Your final score is " + ptsScored + "."
 }
 
+function submitScore(event) {
+    event.preventDefault()
+    highScoreformEl.style.display = "none"
+    highScoresectionEl.style.display = "initial"
+    var nameValue = nameInput.value
+    localStorage.setItem("name", nameValue)
+    var newHigscore = document.createElement("li")
+    newHigscore.textContent = nameValue + "-" + ptsScored
+    highScorelistEl.appendChild(newHigscore)
+
+}
+
 //EVENT LISTENERS
-viewScoresEl.addEventListener("click",function(){
+viewScoresEl.addEventListener("click", function () {
     IntroEl.style.display = "none"
     highScoresectionEl.style.display = "initial"
 })
 startBtnEl.addEventListener("click", startQuiz)
 
-    // Adds an event listener to each option
+// Adds an event listener to each option
 optionsEl.addEventListener("click", function (event) {
     if (event.target.textContent === arrayOfQuestions[Qindex].answers) {
         responseEl.textContent = "Right!"
@@ -105,12 +119,8 @@ optionsEl.addEventListener("click", function (event) {
     }
 })
 
-submitEl.addEventListener("click", function(event){
-    event.preventDefault()
-    highScoreformEl.style.display = "none"
-    highScoresectionEl.style.display = "initial"
-})
+submitEl.addEventListener("click", submitScore)
 
-returnToQuizEl.addEventListener("click", function(){
+returnToQuizEl.addEventListener("click", function () {
     location.reload()
 })
